@@ -7,6 +7,38 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="countriesList" 
+                 Grid.Row="0" Grid.Column="0"
+                 ItemsSource="{Binding Countries}">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add country..." Command="{Binding AddCountryCommand}"/>
+                    <MenuItem Header="Edit country..." Command="{Binding EditCountryCommand}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontSize="16"/>
+                        <TextBlock Text="{Binding Capital}"/>
+                        <TextBlock Text="{Binding Continent.Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Add country..." Command="{Binding AddCountryCommand}"/>
+            <Button x:Name="editCountryButton" Content="Edit country..." 
+                    Command="{  Binding EditCountryCommand}"
+                                CommandParameter="{Binding ElementName=countriesList, Path=SelectedItem}"/>
+        </StackPanel>
     </Grid>
 </Window>

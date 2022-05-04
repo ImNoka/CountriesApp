@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestEFAsyncWPF.Model.Countries
 {
-    internal class MeetInteraction
+    public class MeetInteraction : Interaction
     {
         public string Name { get; set; }
         public Country MeetCountry { get; set; }

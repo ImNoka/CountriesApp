@@ -14,8 +14,8 @@ namespace TestEFAsyncWPF.Model.Countries
         public DateTime? FoundationDate { get; set; }
         public GDP GDP { get; set; }
         public Continent Continent { get; set; }
-        public EconomicUnion? EconomicUnions { get; set; } = new();
-        public MilitaryUnion? MilitaryUnions { get; set; } = new();
+        public List<EconomicUnion>? EconomicUnions { get; set; } = new();
+        public List<MilitaryUnion>? MilitaryUnions { get; set; } = new();
         public List<Country>? OpenCountries { get; set; } = new();
         public List<Country>? Conflicts { get; set; } = new();
         
