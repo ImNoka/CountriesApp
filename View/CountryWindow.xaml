@@ -43,8 +43,13 @@
 
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name}"/>
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Capital}"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Continent}"/>
-            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding GDP}"/>
+            <ComboBox x:Name="continentsBox" Grid.Column="1" Grid.Row="2" Width="150" Height="30" 
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding ContinentName}"
+                      ItemsSource="{Binding Continents}"/>
+
+
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding GDP.Value}"/>
             <!--TextBox Grid.Column="1" Grid.Row="4" Text="{Binding EconomicUnions}"/-->
             <Button IsCancel="True" Grid.Column="1" Grid.Row="6">Cancel</Button>
         </Grid>

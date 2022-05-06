@@ -26,7 +26,7 @@ namespace TestEFAsyncWPF
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new CountriesViewModel();
+            this.DataContext = new MainViewModel();
 
             using (CountryContext countryContext = new CountryContext())
             {

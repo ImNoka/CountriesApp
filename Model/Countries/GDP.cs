@@ -6,5 +6,10 @@ namespace TestEFAsyncWPF.Model.Countries
     public class GDP
     {
         public double Value { get; set; }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

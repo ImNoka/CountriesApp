@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TestEFAsyncWPF.Model.Countries;
+using TestEFAsyncWPF.ViewModel;
+
 namespace TestEFAsyncWPF.View
 {
     /// <summary>
@@ -20,12 +22,20 @@ namespace TestEFAsyncWPF.View
     public partial class CountryWindow : Window
     {
         public Country Country;
-
-        public CountryWindow(Country country)
+        public IEnumerable<Continent> Continents;
+        public string ContinentName;
+        public CountryWindow(Country country, IEnumerable<Continent> continents)
         {
             InitializeComponent();
+            this.DataContext = new CountryViewModel();
             Country = country;
+            Continents = continents;
+            if (Country.GDP == null)
+                Country.GDP = new GDP();
             this.DataContext = Country;
+            continentsBox.DataContext = new { Continents, ContinentName };
+            System.Diagnostics.Debug.WriteLine("CW Continent: " + Country.Continent);
+            System.Diagnostics.Debug.WriteLine("CW GDP: " + Country.GDP);
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)

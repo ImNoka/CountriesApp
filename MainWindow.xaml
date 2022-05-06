@@ -5,7 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestEFAsyncWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="1000">
+    <Window.Resources>
+        <Style TargetType="ListBox">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style TargetType="ListView">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -15,25 +23,64 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="countriesList" 
-                 Grid.Row="0" Grid.Column="0"
-                 ItemsSource="{Binding Countries}">
-            <ListBox.ContextMenu>
+        <TabControl x:Name="itemsTab" Grid.Column="0" Grid.Row="0">
+            <TabItem x:Name="countriesTab">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Countries"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                <ListView x:Name="countriesList" ItemsSource="{Binding Countries}">
+            <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add country..." Command="{Binding AddCountryCommand}"/>
                     <MenuItem Header="Edit country..." Command="{Binding EditCountryCommand}"/>
                 </ContextMenu>
-            </ListBox.ContextMenu>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name}" FontSize="16"/>
-                        <TextBlock Text="{Binding Capital}"/>
-                        <TextBlock Text="{Binding Continent.Name}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}">Name</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Capital}">Capital</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Continent.Name}">Continent</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding GDP.Value}">GDP</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="continentsTab">
+                <TabItem.Header>
+                    <TextBlock Text="Continents"/>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ListView VerticalAlignment="Top" BorderThickness="0" ItemsSource="{Binding Continents}">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal" VerticalAlignment="Top"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontSize="16"/>
+                                    <ListBox BorderThickness="0" ItemsSource="{Binding Countries}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Name}" FontSize="14"/>
+                                                    <TextBlock Text="{Binding Capital}" FontSize="12"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Add country..." Command="{Binding AddCountryCommand}"/>
             <Button x:Name="editCountryButton" Content="Edit country..." 

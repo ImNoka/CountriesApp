@@ -10,7 +10,7 @@ using TestEFAsyncWPF.View;
 
 namespace TestEFAsyncWPF.ViewModel
 {
-    public class CountriesViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         CountryContext db;
 
@@ -57,7 +57,7 @@ namespace TestEFAsyncWPF.ViewModel
         #endregion
 
 
-        public CountriesViewModel()
+        public MainViewModel()
         {
             db = new CountryContext();
             db.Countries.Load();
@@ -77,11 +77,14 @@ namespace TestEFAsyncWPF.ViewModel
                 return addCountryCommand ??
                     (addCountryCommand = new RelayCommand(obj =>
                     {
-                        CountryWindow countryWindow = new CountryWindow(new Country());
+                        CountryWindow countryWindow = new CountryWindow(new Country(), Continents);
                         if (countryWindow.ShowDialog() == true)
                         {
                             Country country = countryWindow.Country;
+                            System.Diagnostics.Debug.WriteLine("VM Continent: "+country.Continent);
+                            System.Diagnostics.Debug.WriteLine("VM GDP: "+country.GDP);
                             db.Countries.Add(country);
+                            //db.SaveChanges();
                         }
                     }));
             }
@@ -105,7 +108,9 @@ namespace TestEFAsyncWPF.ViewModel
                             Continent = country.Continent,
                             EconomicUnions = country.EconomicUnions
                         };
-                        CountryWindow countryWindow = new CountryWindow(countryVM);
+                        //System.Diagnostics.Debug.WriteLine(countryVM.Continent.Name);
+                        //System.Diagnostics.Debug.WriteLine(countryVM.GDP);
+                        CountryWindow countryWindow = new CountryWindow(countryVM, Continents);
                         if (countryWindow.ShowDialog() == true)
                         {
                             country = db.Countries.Find(countryWindow.Country.Id);
@@ -114,7 +119,7 @@ namespace TestEFAsyncWPF.ViewModel
                                 country.Name = countryWindow.Country.Name;
                                 country.Continent = countryWindow.Country.Continent;
                                 country.EconomicUnions = countryWindow.Country.EconomicUnions;
-                                country.GDP = countryWindow.Country.GDP;
+                                country.GDP.Value = countryWindow.Country.GDP.Value;
                                 country.Capital = countryWindow.Country.Capital;
                                 db.Entry(country).State = EntityState.Modified;
                                 db.SaveChanges();
