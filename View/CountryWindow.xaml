@@ -33,23 +33,21 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
             <TextBlock Text="Capital" Grid.Column="0" Grid.Row="1"/>
-            <TextBlock Text="Continent" Grid.Column="0" Grid.Row="2"/>
-            <TextBlock Text="GDP" Grid.Column="0" Grid.Row="3"/>
-            <!--TextBlock Text="EconomicUnions" Grid.Column="0" Grid.Row="4"/-->
+            <TextBlock Text="GDP" Grid.Column="0" Grid.Row="2"/>
+            <TextBlock Text="Continent" Grid.Column="0" Grid.Row="3"/>
+            <TextBlock Text="EconomicUnions" Grid.Column="0" Grid.Row="4"/>
             <Button IsDefault="True" Click="Accept_Click" Grid.Column="0" Grid.Row="6">OK</Button>
 
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name}"/>
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Capital}"/>
-            <ComboBox x:Name="continentsBox" Grid.Column="1" Grid.Row="2" Width="150" Height="30" 
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding GDP.Value}"/>
+            <ComboBox x:Name="continentsBox" Grid.Column="1" Grid.Row="3" Width="150" Height="30" 
                       DisplayMemberPath="Name"
-                      SelectedItem="{Binding ContinentName}"
-                      ItemsSource="{Binding Continents}"/>
-
-
-            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding GDP.Value}"/>
+                      ItemsSource="{Binding}"/>
             <!--TextBox Grid.Column="1" Grid.Row="4" Text="{Binding EconomicUnions}"/-->
             <Button IsCancel="True" Grid.Column="1" Grid.Row="6">Cancel</Button>
         </Grid>

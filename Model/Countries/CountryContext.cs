@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,11 +23,12 @@ namespace TestEFAsyncWPF.Model.Countries
         {
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
+            System.Diagnostics.Debug.WriteLine(Path.Combine(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString(), "CountriesDB.db"));
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Datasource=Countries.db");
+            optionsBuilder.UseSqlite($"Data source={Path.Combine(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString(), "CountriesDB.db")}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

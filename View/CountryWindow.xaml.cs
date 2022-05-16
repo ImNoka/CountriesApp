@@ -23,23 +23,22 @@ namespace TestEFAsyncWPF.View
     {
         public Country Country;
         public IEnumerable<Continent> Continents;
-        public string ContinentName;
-        public CountryWindow(Country country, IEnumerable<Continent> continents)
+        public IEnumerable<EconomicUnion> EconomicUnions;
+        public CountryWindow(Country country, MainViewModel mainViewModel)
         {
             InitializeComponent();
-            this.DataContext = new CountryViewModel();
             Country = country;
-            Continents = continents;
             if (Country.GDP == null)
                 Country.GDP = new GDP();
+            Continents = mainViewModel.Continents;
+            EconomicUnions= mainViewModel.EconomicUnions;
             this.DataContext = Country;
-            continentsBox.DataContext = new { Continents, ContinentName };
-            System.Diagnostics.Debug.WriteLine("CW Continent: " + Country.Continent);
-            System.Diagnostics.Debug.WriteLine("CW GDP: " + Country.GDP);
+            continentsBox.DataContext = Continents;
         }
-
         private void Accept_Click(object sender, RoutedEventArgs e)
-        {
+        {   
+            Country.Continent = continentsBox.SelectedItem as Continent;
+            //System.Diagnostics.Debug.WriteLine("CW Continent: "+Country.Continent.Name);
             this.DialogResult = true;
         }
     }

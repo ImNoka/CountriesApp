@@ -27,11 +27,27 @@ namespace TestEFAsyncWPF
         {
             InitializeComponent();
             this.DataContext = new MainViewModel();
+            #region FirstData
+            /*using (CountryContext db = new CountryContext())
+            {
+                Continent continentAfrica = new Continent() { Name = "Africa" };
+                Continent continentNorthAmerica = new Continent() { Name="North America"};
+                Continent continentSouthAmerica = new Continent() { Name="South America"};
+                Continent continentAustralia = new Continent() { Name="Australia"};
+                Continent continentAntarctica = new Continent() { Name="Antarctica"};
+
+                db.Continents.AddRange( continentAfrica,
+                                        continentAntarctica,
+                                        continentAustralia,
+                                        continentNorthAmerica,
+                                        continentSouthAmerica);
+                db.SaveChanges();
+            }
 
             using (CountryContext countryContext = new CountryContext())
             {
-                countryContext.Database.EnsureDeleted();
-                countryContext.Database.EnsureCreated();
+                //countryContext.Database.EnsureDeleted();
+                //countryContext.Database.EnsureCreated();
 
                 Continent continentAsia = new Continent { Name = "Asia" };
                 Continent continentEurope = new Continent { Name = "Europe" };
@@ -98,7 +114,13 @@ namespace TestEFAsyncWPF
                         
                     }
                 }
-            }
+            }*/
+            #endregion
+        }
+
+        public void SelectedTree(object sender, EventArgs eventArgs)
+        {
+            System.Diagnostics.Debug.WriteLine(eventArgs.ToString());
         }
     }
 }

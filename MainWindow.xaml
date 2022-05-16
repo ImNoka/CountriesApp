@@ -26,11 +26,10 @@
         <TabControl x:Name="itemsTab" Grid.Column="0" Grid.Row="0">
             <TabItem x:Name="countriesTab">
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Countries"/>
-                    </StackPanel>
+                    <TextBlock Text="Countries"/>
                 </TabItem.Header>
                 <TabItem.Content>
+                    <StackPanel>
                 <ListView x:Name="countriesList" ItemsSource="{Binding Countries}">
             <ListView.ContextMenu>
                 <ContextMenu>
@@ -38,16 +37,26 @@
                     <MenuItem Header="Edit country..." Command="{Binding EditCountryCommand}"/>
                 </ContextMenu>
             </ListView.ContextMenu>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}">Name</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Capital}">Capital</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Continent.Name}">Continent</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding GDP.Value}">GDP</GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Name}">Name</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Capital}">Capital</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Continent.Name}">Continent</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding GDP.Value}">GDP</GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Add country..." Command="{Binding AddCountryCommand}"/>
+                            <Button x:Name="editCountryButton" Content="Edit country..." 
+                                    Command="{  Binding EditCountryCommand}"
+                                CommandParameter="{Binding ElementName=countriesList, Path=SelectedItem}"/>
+                            <Button Content="Remove country" Command="{Binding RemoveCountryCommand}"
+                                    CommandParameter="{Binding ElementName=countriesList, Path=SelectedItem}"/>
+                        </StackPanel>
+                    </StackPanel>
                 </TabItem.Content>
+                
             </TabItem>
             <TabItem x:Name="continentsTab">
                 <TabItem.Header>
@@ -80,12 +89,63 @@
                     </ListView>
                 </TabItem.Content>
             </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="EconomicUnions"/>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel>
+                        <TreeView x:Name="ecoUnionsList" ItemsSource="{Binding EconomicUnions}">
+                            <TreeView.ItemContainerStyle>
+                                <Style TargetType="{x:Type TreeViewItem}">
+                                    <Setter Property="Focusable" Value="True"/>
+                                    <Setter Property="Header" Value="{Binding Name}"/>
+                                    <Setter Property="ItemsSource" Value="{Binding Countries}"/>
+                                </Style>
+                            </TreeView.ItemContainerStyle>
+
+                        </TreeView>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Add Economic Union..." Command="{Binding AddEconomicUnionCommand}"/>
+                            <Button x:Name="editEcoUnionButton" Content="Edit Economic Union..." 
+                                    Command="{Binding EditEconomicUnionCommand}"
+                                    CommandParameter="{Binding ElementName=ecoUnionsList, Path=SelectedItem}"/>
+                            <Button Content="Remove Economic Union" Command="{Binding RemoveEconomicUnionCommand}"
+                                    CommandParameter="{Binding ElementName=ecoUnionsList, Path=SelectedItem}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
         </TabControl>
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Add country..." Command="{Binding AddCountryCommand}"/>
-            <Button x:Name="editCountryButton" Content="Edit country..." 
-                    Command="{  Binding EditCountryCommand}"
-                                CommandParameter="{Binding ElementName=countriesList, Path=SelectedItem}"/>
-        </StackPanel>
+        <TabControl Grid.Column="1" Grid.Row="0">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="EconomicInteractions"/>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel>
+                    <ListView x:Name="EcoInteractionsList" ItemsSource="{Binding EconomicInteractions}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Product}">Product</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Price}">Price</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding CountryBuyer.Name}">Buyer</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding CountrySeller.Name}">Seller</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Date}">Date</GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                    </ListView>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Add Economic interaction..." Command="{Binding AddEconomicInteractionCommand}"/>
+                            <Button x:Name="editEcoInteractionButton" Content="Edit Economic interaction..." 
+                                    Command="{Binding EditEconomicInteractionCommand}"
+                                    CommandParameter="{Binding ElementName=EcoInteractionsList, Path=SelectedItem}"/>
+                            <Button Content="Remove Economic interaction}" Command="{Binding RemoveEconomicInteractionCommand}"
+                                    CommandParameter="{Binding ElementName=EcoInteractionsList, Path=SelectedItem}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
